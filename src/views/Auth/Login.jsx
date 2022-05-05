@@ -19,9 +19,15 @@ export default function Login() {
     event.preventDefault();
     const loginWasSuccessful = auth.login(formState.email, formState.password);
 
+    if (loginWasSuccessful !== true) {
+      setError('login unsucessful');
+    } else {
+      history.replace(from);
+    }
+
     // TODO: If login was unsuccessful, set an error with a message
     // to display to the user that their login failed.
-    //
+
     // If login was successful, use the history hook
     // from React Router to replace the current URL with the URL
     // we need to redirect to.
@@ -32,17 +38,21 @@ export default function Login() {
     <>
       <h3>You must log in to view the page at {from.pathname}</h3>
       <form onSubmit={handleLogin} className={styles.loginForm}>
-        <label>Email</label>
+        <label htmlFor='email'>Email</label>
         <input
           id="email"
           name="email"
           type="email"
+          value={formState.email}
+          onChange={handleFormChange}
         />{' '}
-        <label>Password</label>
+        <label htmlFor='password'>Password</label>
         <input
           id="password"
           name="password"
           type="password"
+          value={formState.password}
+          onChange={handleFormChange}
         />
         <button type="submit" aria-label="Sign In">
           Sign in
